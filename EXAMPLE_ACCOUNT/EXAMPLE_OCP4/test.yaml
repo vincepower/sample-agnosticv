@@ -1,0 +1,7 @@
+---
+purpose: test
+
+agnosticv_meta:
+  idle_after_deploy: 26
+  idle_after_start: 12
+  agnosticd_git_tag_prefix: ocp4-test

@@ -1,0 +1,37 @@
+---
+## This first tag has to match the CloudForms provider deploying this CI.
+## It may be passed by the provider, so please make sure you are not overwriting it with this definition.
+platform: RHPDS
+env_type: ocp4-cluster
+
+## This will be the case for most OCP4 deploys and event deploys. Make sure whether you really need IPA integration.
+install_ipa_client: false
+repo_method: file
+software_to_deploy: none
+
+##The below variable will be false for most non-training environments.
+install_ftl: false
+install_student_user: true
+install_idm: htpasswd
+
+## Admin user will be admin for non-training configs, opentlc-mgr for training related configs.
+admin_user: admin
+install_ocp4: true
+
+## For the environment to build, the pub key must be present in the AWS EC2 Region where the deploy will happen.
+key_name: admin_user_key
+
+# Version
+osrelease: 4.5.16
+
+# Specific stuff for the cluster
+bastion_instance_type: "{{ 't2.large' if node_instance_count|int <= 10 else 't2.xlarge' }}"
+master_instance_type: m4.xlarge
+worker_instance_type: m4.4xlarge
+_infra_instance_type: m4.4xlarge
+_infra_node_replicas: 1
+
+# Workloads to deploy
+default_workloads:
+  - ocp4-workload-enable-lets-encrypt-certificates
+  - ocp-workload-terminal
